@@ -20,6 +20,8 @@ COMMON_PATH := device/samsung/ms01-common
 
 TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
 
+BUILD_FINGERPRINT := samsung/s3ve3gxx/s3ve3g:4.4.2/KOT49H/I9301IXXUANL1:user/release-keys
+
 # Assert
 TARGET_OTA_ASSERT_DEVICE := ms01,ms013g,ms01lte
 
