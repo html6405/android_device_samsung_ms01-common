@@ -28,42 +28,39 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 
 #include "property_service.h"
 
-
 #include "init_msm8226.h"
 
 using android::base::GetProperty;
-using android::init::property_set;
 
 void vendor_load_properties()
 {
-    std::string platform = GetProperty("ro.board.platform", "");
-    if (platform != ANDROID_TARGET)
-        return;
-
     std::string bootloader = GetProperty("ro.bootloader", "");
 
     if (bootloader.find("G7105") == 0) {
         /* ms01ltexx */
-        property_override_dual("ro.build.fingerprint", "ro.vendor.build.fingerprint", "samsung/ms01ltexx/ms01lte:4.4.2/KOT49H/G7105XXUBNI2:user/release-keys");
         property_override("ro.build.description", "ms01ltexx-user 4.4.2 KOT49H G7105XXUBNI2 release-keys");
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "SM-G7105");
-        property_override_dual("ro.product.device", "ro.product.vendor.device", "ms01lte");
-	gsm_properties("9", "1");
+        set_ro_product_prop("device", "ms01lte");
+        set_ro_build_prop("fingerprint", "samsung/ms01ltexx/ms01lte:4.4.2/KOT49H/G7105XXUBNI2:user/release-keys");
+        set_ro_product_prop("model", "SM-G7105");
+        set_ro_product_prop("name", "ms01lte");
+        gsm_properties("9", "1");
     } else if (bootloader.find("G7102") == 0) {
         /* ms013gxx */
-        property_override_dual("ro.build.fingerprint", "ro.vendor.build.fingerprint", "samsung/ms013gxx/ms013g:4.4.2/KOT49H/G7102XXUBOB1:user/release-keys");
         property_override("ro.build.description", "ms013gxx-user 4.4.2 KOT49H G7102XXUBOB1 release-keys");
-        property_override_dual("ro.product.model", "ro.product.vendor.model", "SM-G7102");
-        property_override_dual("ro.product.device", "ro.product.vendor.device", "ms013g");
+        set_ro_product_prop("device", "ms013g");
+        set_ro_build_prop("fingerprint", "samsung/ms013gxx/ms013g:4.4.2/KOT49H/G7102XXUBOB1:user/release-keys");
+        set_ro_product_prop("model", "SM-G7102");
+        set_ro_product_prop("name", "ms013g");
         gsm_properties("3", "0");
     } else {
         gsm_properties("9", "1");
-    }     
+    }
 
     std::string device = GetProperty("ro.product.device", "");
     LOG(ERROR) << "Found bootloader id " << bootloader <<  " setting build properties for "
